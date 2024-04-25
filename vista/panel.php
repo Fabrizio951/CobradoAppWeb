@@ -82,16 +82,12 @@
           </div>
           <!-- ./col -->
         </div>
-        <!-- /.row -->
-        <!-- Main row -->
-        <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 
     <script>
       $(document).ready(function(){
-
         $.ajax({
           url: "ajax/dashboard.ajax.php",
           method: 'POST',
@@ -104,5 +100,22 @@
             $('#Dpendientes').html(respuesta[0]['DeudasPendientes'])
           }
         });
-      })
+      });
+
+      setInterval(() => {
+        $(document).ready(function(){
+          $.ajax({
+            url: "ajax/dashboard.ajax.php",
+            method: 'POST',
+            dataType:'json',
+            success:function(respuesta){
+              console.log("respuesta",respuesta);
+              $('#Mpagado').html('S./ '+ respuesta[0]['MontoPagado'].replace(/\d(?=(\d{3})+\.)/g,"$&," ))
+              $('#Dtotal').html('S./ '+ respuesta[0]['DeudaTotal'].replace(/\d(?=(\d{3})+\.)/g,"$&," ))
+              $('#Cregistrados').html(respuesta[0]['NúmerodeClientes'])
+              $('#Dpendientes').html(respuesta[0]['DeudasPendientes'])
+            }
+          });
+        });
+      }, 10000);
     </script>
