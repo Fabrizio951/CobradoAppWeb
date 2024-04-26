@@ -30,7 +30,7 @@
                  <p>Monto pagado</p>
                </div>
                <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="ion ion-cash"></i>
                </div>
                <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -42,10 +42,10 @@
               <div class="inner">
                 <h3 id="Dtotal"></h3>
 
-                <p>Deuda total</p>
+                <p>Balance Total</p>
               </div>
               <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="ion ion-cash"></i>
               </div>
               <a href="#" class="small-box-footer">Ver más  <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -75,12 +75,37 @@
                 <p>Deudas pendientes</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="ion ion-stats-bars"></i>
               </div>
               <a href="#" class="small-box-footer">Ver más  <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Al corriente: S./ 4,000.00</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id=barChart style="min-height: 250px; height: 300px; max-height: 350px; width: 100%;">
+
+                  </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
