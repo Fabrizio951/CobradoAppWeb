@@ -87,7 +87,7 @@
           <div class="col-12">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Al corriente: S./ 4,000.00</h3>
+                <h3 class="card-title" id="AlCorriente"></h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -112,6 +112,7 @@
     <!-- /.content -->
 
     <script>
+
       $(document).ready(function(){
         $.ajax({
           url: "ajax/dashboard.ajax.php",
@@ -125,9 +126,8 @@
             $('#Dpendientes').html(respuesta[0]['DeudasPendientes'])
           }
         });
-      });
 
-      setInterval(() => {
+        setInterval(() => {
         $(document).ready(function(){
           $.ajax({
             url: "ajax/dashboard.ajax.php",
@@ -139,8 +139,35 @@
               $('#Dtotal').html('S./ '+ respuesta[0]['DeudaTotal'].replace(/\d(?=(\d{3})+\.)/g,"$&," ))
               $('#Cregistrados').html(respuesta[0]['NúmerodeClientes'])
               $('#Dpendientes').html(respuesta[0]['DeudasPendientes'])
-            }
+              }
+            });
           });
+        }, 10000);
+
+      $.ajax({
+          url: "ajax/dashboard.ajax.php",
+          method: 'POST',
+          data:{
+            'accion':1 //Parametros para obtener Deuda al corriente
+          },
+          dataType:'json',
+          success:function(respuesta){
+            console.log("respuesta",respuesta);
+
+            var fecha_AlCorriente = [];
+            var Monto_AlCorriente = [];
+            var Monto_AlCorriente_Total = 0;
+
+            for(let i = 0; i<respuesta.length; i++){
+              fecha_AlCorriente.push(respuesta[i]['Fecha_deuda_formateada']);
+              Monto_AlCorriente.push(respuesta[i]['Monto']);
+              Monto_AlCorriente_Total = parseFloat(Monto_AlCorriente_Total) + parseFloat(respuesta[i]['Monto']);
+            }
+
+            $('#AlCorriente').html('Al corriente: S./ '+ parseFloat(Monto_AlCorriente_Total));
+            
+
+          }
         });
-      }, 10000);
+});
     </script>

@@ -10,8 +10,20 @@ class AjaxDashboard{
 
         echo json_encode($datos);
     }
+
+    public function getDeudaAlcorriente(){
+
+        $deudaAlcorriente = DashboardControlador::ctrGetdeudaAlcorriente();
+        echo json_encode($deudaAlcorriente);
+    }
 } 
 
-$datos = new AjaxDashboard();
-$datos -> getDatosDashboard();
+if(isset($_POST['accion']) && $_POST['accion'] == 1){
 
+    $deudaAlcorriente = new AjaxDashboard();
+    $deudaAlcorriente  -> getDeudaAlcorriente();
+    
+}else{
+    $datos = new AjaxDashboard();
+    $datos -> getDatosDashboard();
+}

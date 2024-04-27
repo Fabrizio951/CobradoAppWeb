@@ -6,4 +6,10 @@ class DashboardControlador{
 
         return $datos;
     }
+
+    static public function ctrGetdeudaAlcorriente(){
+        $deudaAlcorriente = DashboardModelo::mdlGetdeudaAlcorriente();
+
+        return $deudaAlcorriente;
+    }
 }
