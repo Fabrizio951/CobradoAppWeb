@@ -82,7 +82,7 @@
           </div>
           <!-- ./col -->
         </div>
-
+        <!--/. Small boxes-->
         <div class="row">
           <div class="col-12">
             <div class="card card-info">
@@ -113,7 +113,7 @@
 
     <script>
 
-      $(document).ready(function(){
+    $(document).ready(function(){
         $.ajax({
           url: "ajax/dashboard.ajax.php",
           method: 'POST',
@@ -144,7 +144,7 @@
           });
         }, 10000);
 
-      $.ajax({
+        $.ajax({
           url: "ajax/dashboard.ajax.php",
           method: 'POST',
           data:{
@@ -164,10 +164,73 @@
               Monto_AlCorriente_Total = parseFloat(Monto_AlCorriente_Total) + parseFloat(respuesta[i]['Monto']);
             }
 
-            $('#AlCorriente').html('Al corriente: S./ '+ parseFloat(Monto_AlCorriente_Total));
+            $('#AlCorriente').html('Al corriente: S./ '+ Monto_AlCorriente_Total.toString().replace(/\d(?=(\d{3})+\.)/g,"$&,"));
             
+            var barChartCanvas = $("#barChart").get(0).getContext('2d');
 
+            var areaChartData = {
+              labels:fecha_AlCorriente,
+              datasets:[
+                {
+                  label:'Monto',
+                  backgroundColor:'rgba(60,141,188,0.9)',
+                  data: Monto_AlCorriente
+                }
+              ]
+            }
+
+            var barChartData = $.extend(true,{},areaChartData);
+
+            var temp0 = areaChartData.datasets[0];
+
+            barChartData.datasets[0] = temp0;
+
+            var barChartOptions = {
+              maintainAspectRatio: false,
+              responsive: true,
+              events: false,
+              legend:{
+                display: true
+              },
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true,
+                          max: 1200 // Establecer el límite superior del eje y a 1200
+                      }
+                  }]
+              },
+              animation:{
+                duration: 500,
+                easing: "easeOutQuart", 
+                onComplete: function () {
+                  var ctx = this.chart.ctx;
+                  ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal',Chart.defaults.global.defaultFontFamily);
+                  ctx.textAlign='center';
+                  ctx.textBaseline='bottom';
+
+                  this.data.datasets.forEach(function (dataset) {
+                    for (var i = 0; i < dataset.data.length; i++) {
+                      var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model, 
+                          scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
+                      ctx.fillstyle= '#444';
+                      var y_pos = model.y - 5;
+                      if ((scale_max - model.y) / scale_max >= 0.93)
+                        y_pos = model.y + 20;
+                      ctx.fillText(dataset.data[i], model.x, y_pos);
+                    }
+                  });
+                }
+              }
+            }
+
+            new Chart(barChartCanvas, {
+              type: 'bar',
+              data:barChartData,
+              options:barChartOptions
+            })
+            
           }
         });
-});
+    });
     </script>
