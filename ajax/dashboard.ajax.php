@@ -7,7 +7,6 @@ class AjaxDashboard{
     public function getDatosDashboard(){
 
         $datos = DashboardControlador::ctrGetDatosDashboard();
-
         echo json_encode($datos);
     }
 
@@ -16,6 +15,30 @@ class AjaxDashboard{
         $deudaAlcorriente = DashboardControlador::ctrGetdeudaAlcorriente();
         echo json_encode($deudaAlcorriente);
     }
+
+    public function getDeudaProximo(){
+
+        $deudaProximo = DashboardControlador::ctrGetdeudaProximo();
+        echo json_encode($deudaProximo);
+    }
+
+    public function getDeudaPorVencer(){
+
+        $deudaPorVencer = DashboardControlador::ctrGetdeudaPorVencer();
+        echo json_encode($deudaPorVencer);
+    }
+
+    public function getDeudaVencido(){
+
+        $deudaVencido = DashboardControlador::ctrGetdeudaVencido ();
+        echo json_encode($deudaVencido);
+    }
+
+    public function getDeudaAlerta(){
+
+        $deudaAlerta = DashboardControlador::ctrGetdeudaAlerta ();
+        echo json_encode($deudaAlerta);
+    }
 } 
 
 if(isset($_POST['accion']) && $_POST['accion'] == 1){
@@ -23,7 +46,27 @@ if(isset($_POST['accion']) && $_POST['accion'] == 1){
     $deudaAlcorriente = new AjaxDashboard();
     $deudaAlcorriente  -> getDeudaAlcorriente();
     
-}else{
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 2){
+
+    $deudaProximo = new AjaxDashboard();
+    $deudaProximo -> getDeudaProximo();
+    
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 3){
+
+    $deudaPorVencer = new AjaxDashboard();
+    $deudaPorVencer -> getDeudaPorVencer();
+    
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 4){
+
+    $deudaVencido = new AjaxDashboard();
+    $deudaVencido -> getDeudaVencido();
+    
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 5){
+
+    $deudaAlerta = new AjaxDashboard();
+    $deudaAlerta -> getDeudaAlerta();
+    
+} else{
     $datos = new AjaxDashboard();
     $datos -> getDatosDashboard();
 }

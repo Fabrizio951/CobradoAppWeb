@@ -12,4 +12,28 @@ class DashboardControlador{
 
         return $deudaAlcorriente;
     }
+
+    static public function ctrGetdeudaProximo(){
+        $deudaProximo = DashboardModelo::mldGetdeudaProximo();
+
+        return $deudaProximo;
+    }
+
+    static public function ctrGetdeudaPorVencer(){
+        $deudaPorVencer = DashboardModelo::mldGetdeudaPorVencer();
+
+        return $deudaPorVencer;
+    }
+    
+    static public function ctrGetdeudaVencido(){
+        $deudaVencido = DashboardModelo::mldGetdeudaVencido();
+
+        return $deudaVencido;
+    }
+
+    static public function ctrGetdeudaAlerta(){
+        $deudaAlerta = DashboardModelo::mldGetdeudaAlerta();
+
+        return $deudaAlerta;
+    }
 }
