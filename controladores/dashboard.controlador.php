@@ -36,4 +36,16 @@ class DashboardControlador{
 
         return $deudaAlerta;
     }
+
+    static public function ctrGetDeudas(){
+        $Deudas = DashboardModelo::mldGetDeudas();
+
+        return $Deudas;
+    }
+
+    static public function ctrGetClientes(){
+        $Clientes = DashboardModelo::mldGetClientes();
+
+        return $Clientes;
+    }
 }

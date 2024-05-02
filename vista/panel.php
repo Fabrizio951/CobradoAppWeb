@@ -218,12 +218,87 @@
         </div>
         <!--/ Grafico de Barras-->
 
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Clientes</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                  </div> <!-- ./ end card-tools -->
+                </div> <!-- ./ end card-header -->
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table" id="tbl_Clientes">
+                    <thead>
+                      <tr>
+                        <th>Cod Cliente</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div> <!-- ./ end card-body -->
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Deudas</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                  </div> <!-- ./ end card-tools -->
+                </div> <!-- ./ end card-header -->
+              <div class="card-body">        
+                <div class="table-responsive">
+                    <table class="table" id="tbl_Deudas">
+                      <thead>
+                        <tr>
+                          <th>Cod Deudas</th>
+                          <th>Cod Clientes</th>
+                          <th>Monto</th>
+                          <th>Creación</th>
+                          <th>Vencimiento</th>
+                          <th>Estado</th>
+                          <th>Moneda</th>
+                          <th>Nivel</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                      </tbody>
+                    </table>
+                </div>
+              </div> <!-- ./ end card-body -->
+            </div>
+          </div>
+        </div>
+
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 
     <script>
     $(document).ready(function(){
+      /* LLENAR  TARJETAS INFORMATIVAS*/
         $.ajax({
           url: "ajax/dashboard.ajax.php",
           method: 'POST',
@@ -238,7 +313,7 @@
         });
 
         setInterval(() => {
-        $(document).ready(function(){
+          $(document).ready(function(){
           $.ajax({
             url: "ajax/dashboard.ajax.php",
             method: 'POST',
@@ -253,8 +328,8 @@
             });
           });
         }, 10000);
-
-        
+      
+      /* GRAFICO DE BARRAS DE LOS DIFERENTES NIVELES DE DEUDA*/
         /// Sacar datos del Al Corriente
         $.ajax({
           url: "ajax/dashboard.ajax.php",
@@ -426,7 +501,6 @@
                   }
                 }
               }
-
               new Chart(barChartCanvas, {
                 type: 'bar',
                 data:barChartData,
@@ -712,5 +786,58 @@
           }
           
         });
+      /* LISTADO DE CLIENTES Y DEUDAS*/
+        //DEUDAS
+        $.ajax({
+          url: "ajax/dashboard.ajax.php",
+          method: 'POST',
+          data:{
+            'accion':6
+          },
+          dataType: 'json',
+          success:function(respuesta){
+            console.log("respuesta",respuesta);
+
+            for (let i = 0; i<respuesta.length; i++){
+              filas = '<tr>'+
+                          '<td>' + respuesta[i]["ID_Deuda"]+'</td>'+
+                          '<td>' + respuesta[i]["ID_Cliente"]+'</td>'+
+                          '<td>' + respuesta[i]["Monto"]+'</td>'+
+                          '<td>' + respuesta[i]["Creación"]+'</td>'+
+                          '<td>' + respuesta[i]["Vencimiento"]+'</td>'+
+                          '<td>' + respuesta[i]["Estado"]+'</td>'+
+                          '<td>' + respuesta[i]["Moneda"]+'</td>'+
+                          '<td>' + respuesta[i]["Nivel"]+'</td>'+
+                      '</tr>'
+              $("#tbl_Deudas tbody").append(filas);
+            }
+          }
+        });
+        //Clientes
+        $.ajax({
+          url: "ajax/dashboard.ajax.php",
+          method: 'POST',
+          data:{
+            'accion':7
+          },
+          dataType: 'json',
+          success:function(respuesta){
+            console.log("respuesta",respuesta);
+
+            for (let i = 0; i<respuesta.length; i++){
+              filas = '<tr>'+
+                          '<td>' + respuesta[i]["ID_Cliente"]+'</td>'+
+                          '<td>' + respuesta[i]["Nombre"]+'</td>'+
+                          '<td>' + respuesta[i]["Apellidos"]+'</td>'+
+                          '<td>' + respuesta[i]["Dirección"]+'</td>'+
+                          '<td>' + respuesta[i]["Teléfono"]+'</td>'+
+                          '<td>' + respuesta[i]["Correo_electrónico"]+'</td>'+
+                          '<td>' + respuesta[i]["Estado"]+'</td>'+
+                      '</tr>'
+              $("#tbl_Clientes tbody").append(filas);
+            }
+          }
+        })
+      
     });
     </script>

@@ -30,14 +30,26 @@ class AjaxDashboard{
 
     public function getDeudaVencido(){
 
-        $deudaVencido = DashboardControlador::ctrGetdeudaVencido ();
+        $deudaVencido = DashboardControlador::ctrGetdeudaVencido();
         echo json_encode($deudaVencido);
     }
 
     public function getDeudaAlerta(){
 
-        $deudaAlerta = DashboardControlador::ctrGetdeudaAlerta ();
+        $deudaAlerta = DashboardControlador::ctrGetdeudaAlerta();
         echo json_encode($deudaAlerta);
+    }
+
+    public function getDeudas(){
+
+        $Deudas =  DashboardControlador::ctrGetDeudas();
+        echo json_encode($Deudas);
+    }
+
+    public function getClientes(){
+
+        $Clientes = DashboardControlador::ctrGetClientes();
+        echo json_encode($Clientes);
     }
 } 
 
@@ -66,7 +78,17 @@ if(isset($_POST['accion']) && $_POST['accion'] == 1){
     $deudaAlerta = new AjaxDashboard();
     $deudaAlerta -> getDeudaAlerta();
     
-} else{
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 6){
+
+    $Deudas = new AjaxDashboard();
+    $Deudas -> getDeudas();
+    
+} elseif(isset($_POST['accion']) && $_POST['accion'] == 7){
+
+    $Deudas = new AjaxDashboard();
+    $Deudas -> getClientes();
+    
+}else{
     $datos = new AjaxDashboard();
     $datos -> getDatosDashboard();
 }
