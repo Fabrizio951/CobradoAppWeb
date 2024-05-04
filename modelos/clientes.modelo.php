@@ -11,7 +11,7 @@ class ClientesModelo{
             }
 
             // Prepara la llamada al procedimiento almacenado
-            $query = "{CALL ListarClientes}";
+            $query = "{CALL ListarClientesCRUD}";
             $stmt = sqlsrv_prepare($conn, $query);
 
             // Verifica si la preparación fue exitosa

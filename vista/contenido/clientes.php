@@ -53,7 +53,6 @@
                   <th>Teléfono</th>
                   <th>Correo</th>
                   <th>Estado</th>
-                  <th class="text-center">Opciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -79,6 +78,17 @@
       });
 
       table = $("#tbl_clientes").DataTable({
+        ajax:{
+          url: "ajax/clientes.ajax.php",
+          dataSrc: '',
+          type:"POST",
+          data:{'accion':1},
+        },
+        responsive:{
+          details:{
+            type:'column'
+          }
+        },
         language:{
           url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         }
