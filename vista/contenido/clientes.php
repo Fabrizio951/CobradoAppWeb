@@ -68,6 +68,16 @@
     <script>
     $(document).ready(function(){
       var table;
+
+      $.ajax({
+          url: "ajax/clientes.ajax.php",
+          method: 'POST',
+          dataType:'json',
+          success:function(respuesta){
+            console.log("respuesta",respuesta);
+          }
+      });
+
       table = $("#tbl_clientes").DataTable({
         language:{
           url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
