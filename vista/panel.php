@@ -275,7 +275,6 @@
                           <th>Cod Deudas</th>
                           <th>Cod Clientes</th>
                           <th>Monto</th>
-                          <th>Creación</th>
                           <th>Vencimiento</th>
                           <th>Estado</th>
                           <th>Moneda</th>
@@ -803,7 +802,6 @@
                           '<td>' + respuesta[i]["ID_Deuda"]+'</td>'+
                           '<td>' + respuesta[i]["ID_Cliente"]+'</td>'+
                           '<td>' + respuesta[i]["Monto"]+'</td>'+
-                          '<td>' + respuesta[i]["Creación"]+'</td>'+
                           '<td>' + respuesta[i]["Vencimiento"]+'</td>'+
                           '<td>' + respuesta[i]["Estado"]+'</td>'+
                           '<td>' + respuesta[i]["Moneda"]+'</td>'+
