@@ -13,6 +13,14 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="vista/assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+
+  <!-- ============================================================
+  =ESTILOS PARA USO DE DATATABLES JS
+  ===============================================================-->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.0/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+
   <!-- iCheck -->
   <link rel="stylesheet" href="vista/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- JQVMap -->
@@ -66,6 +74,20 @@
   <script src="vista/assets/dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="vista/assets/dist/js/pages/dashboard.js"></script>
+
+  <!-- ============================================================
+  =LIBRERIAS PARA USO DE DATATABLES JS
+  ===============================================================-->
+  <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>        
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
+  <!-- ============================================================
+  =LIBRERIAS PARA EXPORTAR A ARCHIVOS
+  ===============================================================-->
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
