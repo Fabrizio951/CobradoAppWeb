@@ -10,3 +10,13 @@
     color: rgba(0, 0, 0, .9) !important;
     font-weight: bold !important;
 }
+
+table.dataTable tbody td{
+    white-space: nowrap !important;
+    font-size: 20px !important;
+}
+
+#tbl_clientes thead th{
+    white-space: nowrap !important;
+}
+

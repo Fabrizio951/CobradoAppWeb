@@ -51,8 +51,11 @@
                   <th>Apellido</th>
                   <th>Dirección</th>
                   <th>Teléfono</th>
-                  <th>Correo</th>
+                  <th>Correo electronico</th>
                   <th>Estado</th>
+                  <th>N° Deudas</th>
+                  <th>Monto Total</th>
+                  <th class="text-center">Opciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -68,16 +71,20 @@
     $(document).ready(function(){
       var table;
 
-      $.ajax({
-          url: "ajax/clientes.ajax.php",
-          method: 'POST',
-          dataType:'json',
-          success:function(respuesta){
-            console.log("respuesta",respuesta);
-          }
-      });
-
       table = $("#tbl_clientes").DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+                text: 'Agregar Cliente',
+                className: 'addNewRecord',
+                action: function(e, dt, node, config) {
+                    //EVENTO PARA LEVENTAR LA VENTA MODAL
+                    alert('nuevo Boton')
+                }
+            },
+            'excel', 'print', 'pageLength'
+        ],
+        pageLength: [5, 10, 15, 30, 50, 100],
+        pageLength: 10,
         ajax:{
           url: "ajax/clientes.ajax.php",
           dataSrc: '',
@@ -89,6 +96,26 @@
             type:'column'
           }
         },
+        columnDefs:[
+          {
+            targets: 0,
+            orderable: false,
+            className: 'control'
+          },
+          {
+            targets: 10,
+            orderable: false,
+            render: function(datqa, type, full, meta) {
+                return "<center>" +
+                        "<span class='btnEditarCliente text-primary px-1' style='cursor:pointer;'>" +
+                        "<i class='fas fa-pencil-alt fs-5'></i>" +
+                        "<span class='btnEliminarCliente text-danger px-1' style='cursor:pointer;'>" +
+                        "<i class='fas fa-trash fs-5'></i>" +
+                        "</span>" +
+                        "</center>"
+                }
+          }
+        ],
         language:{
           url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         }
