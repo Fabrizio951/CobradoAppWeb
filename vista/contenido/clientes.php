@@ -29,12 +29,60 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
                     </button>
-                    <button type="button" class="btn btn-tool" id="btnLimpiarBusqueda">
+                    <button type="button" class="btn btn-tool text-danger" id="btnLimpiarBusqueda">
                         <i class="fas fa-times"></i>
                     </button>
                   </div> <!-- ./ end card-tools -->
                 </div> <!-- ./ end card-header -->
               <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-12 d-lg-flex">
+
+                    <div style="width: 20%;" class="mx-1">
+                      <input 
+                        type="text" 
+                        id="iptIDcliente"
+                        class="form-control"
+                        placeholder="Id del cliente"
+                        data-index="1">
+                    </div>
+
+                    <div style="width: 20%;" class="mx-1">
+                      <input 
+                        type="text" 
+                        id="iptNombre"
+                        class="form-control"
+                        placeholder="Nombre del cliente"
+                        data-index="2">
+                    </div>
+
+                    <div style="width: 20%;" class="mx-1">
+                      <input 
+                        type="text" 
+                        id="iptApellido"
+                        class="form-control"
+                        placeholder="Apellido del cliente"
+                        data-index="3">
+                    </div>
+                    
+                    <div style="width: 20%;" class="mx-1">
+                      <input 
+                        type="text" 
+                        id="iptMontoDeudaDesde"
+                        class="form-control"
+                        placeholder="P. Deuda desde">
+                    </div>
+
+                    <div style="width: 20%;" class="mx-1">
+                      <input 
+                        type="text" 
+                        id="iptMontoDeudaHasta"
+                        class="form-control"
+                        placeholder="P. Deuda hasta">
+                    </div>
+
+                  </div>
+                </div>
               </div> <!-- ./ end card-body -->
             </div>
           </div>
@@ -71,6 +119,9 @@
     $(document).ready(function(){
       var table;
 
+      /*
+      LLenar tabla clientes 
+      */
       table = $("#tbl_clientes").DataTable({
         dom: 'Bfrtip',
         buttons: [{
@@ -103,6 +154,14 @@
             className: 'control'
           },
           {
+            targets: 7,
+            createdCell: function(td,cellData,rowData,row,col){
+              if(rowData[7] == "Inactivo"){
+                $(td).parent().css("background","#FF7355")
+              }
+            }
+          },
+          {
             targets: 10,
             orderable: false,
             render: function(datqa, type, full, meta) {
@@ -120,5 +179,50 @@
           url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         }
       });
+
+      $("#iptIDcliente").keyup(function(){
+        table.column($(this).data("index")).search(this.value).draw();
+      })
+
+      $("#iptNombre").keyup(function(){
+        table.column($(this).data("index")).search(this.value).draw();
+      })
+
+      $("#iptApellido").keyup(function(){
+        table.column($(this).data("index")).search(this.value).draw();
+      })
+
+      $("#iptMontoDeudaDesde,#iptMontoDeudaHasta").keyup(function(){
+        table.draw();
+      })
+
+      $.fn.dataTable.ext.search.push(
+        function(settings,data,dataIndex){
+
+            var deudaDesde = parseFloat($("#iptMontoDeudaDesde").val());
+            var deudaHasta = parseFloat($("#iptMontoDeudaHasta").val());
+
+            var col_monto =  parseFloat(data[9]);
+
+            if((isNaN(deudaDesde) && isNaN(deudaHasta)) ||
+                (isNaN(deudaDesde) && col_monto <= deudaHasta) ||
+                (deudaDesde <= col_monto && isNaN(deudaHasta)) ||
+                (deudaDesde <= col_monto && col_monto <= deudaHasta)){
+                    return true;
+            }
+            return false;  
+        }
+      )
+
+      $("#btnLimpiarBusqueda").on("click",function(){
+        $("#iptIDcliente").val("")
+        $("#iptNombre").val("")
+        $("#iptApellido").val("")
+        $("#iptMontoDeudaDesde").val("")
+        $("#iptMontoDeudaHasta").val("")
+
+        table.search("").columns().search("").draw();
+      })
+
     })
     </script>
