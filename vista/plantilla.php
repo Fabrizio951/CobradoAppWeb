@@ -39,6 +39,10 @@
 
 
   <!-- SCRIPTS IMPORTANTES -->
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="vista/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+
+  <link rel="stylesheet" href="vista/assets/dist/css/toastr.min.css">
 
   <!-- jQuery -->
   <script src="vista/assets/plugins/jquery/jquery.min.js"></script>

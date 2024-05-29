@@ -115,10 +115,109 @@
     </div>
     <!-- /.content -->
 
+
+    <!-- Ventana Modal para ingresar o modificar un Cliente -->
+    <div class="modal fade" id="mdlGestionarCliente" role="dialog">
+
+      <div class="modal-dialog modal-lg">
+
+        <!-- contenido del modal -->
+        <div class="modal-content">
+
+          <!-- Cabecera del modal -->
+          <div class="modal-header bg-gray py-1 align-items-center">
+            <h5 class="modal-title">Agregar Cliente</h5>
+            <button type="button" class="btn btn-outline-primary text-white border-0 fs-5" data-dismiss="modal" id="btnCerrarModal">
+              <i class="far fa-times-circle"></i>
+            </button>
+          </div>
+
+          <!-- Cuerpo modal-->
+          <div class="modal-body">
+
+            <!-- Abrimos una fila-->
+            <div class="row">
+                <!-- Columna para registro del Nombre del Cliente -->
+                <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                    <label class="" for="iptNombreReg"><i class="fa fa-user-circle fs-6"></i>
+                      <span class="small">Nombre del Cliente</span><span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control form-control-sm" id="iptNombreReg" name="iptNombreReg" placeholder="Nombre del Cliente" required>
+                    <span id="validate_nombre" class="text-danger small fst-italic"
+                      style="display:none">Debe ingresar nombre del cliente</span>
+                  </div>
+                </div>
+
+                <!-- Columna para registro de la Apellidos del Cliente -->
+                <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                    <label class="" for="iptApellidoReg"><i class="fa fa-user-circle fs-6"></i>
+                      <span class="small">Apellido del Cliente</span><span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control form-control-sm" id="iptApellidoReg"
+                      name="iptApellidoReg" placeholder="Apellido del Cliente" required>
+                    <span id="validate_apellido" class="text-danger small fst-italic"
+                      style="display:none">Debe ingresar apellido del cliente</span>
+                  </div>
+                </div>
+
+                <!-- Columna para registro de la direccion -->
+                <div class="col-12">
+                  <div class="form-group mb-2">
+                    <label class="" for="iptDireccionReg">
+                      <i class="fas fa-file-signature fs-6"></i>
+                      <span class="small">Dirección</span><span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control form-control-sm" id="iptDireccionReg"
+                    placeholder="Descripción">
+                    <span id="validate_direccion" class="text-danger small fst-italic"
+                      style="display:none">Deben ingresar la dirección</span>
+                  </div>
+                </div>
+
+                <!-- Columna para registro del Telefono -->
+                <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                    <label class="" for="iptTelefonoReg"><i class="fa fa-user-circle fs-6"></i>
+                      <span class="small">Teléfono</span><span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control form-control-sm" id="iptTelefonoReg"
+                      name="iptTelefonoReg" placeholder="Nombre del Cliente" required>
+                    <span id="validate_telefono" class="text-danger small fst-italic"
+                      style="display:none">Debe ingresar Telefono</span>
+                  </div>
+                </div>
+
+                <!-- Columna para registro del Correo -->
+                <div class="col-lg-6">
+                  <div class="form-group mb-2">
+                    <label class="" for="iptCorreoReg"><i class="fa fa-user-circle fs-6"></i>
+                      <span class="small">Correo</span><span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control form-control-sm" id="iptCorreoReg"
+                      name="iptCorreoReg" placeholder="Nombre del Cliente" required>
+                    <span id="validate_correo" class="text-danger small fst-italic"
+                      style="display:none">Debe ingresar correo</span>
+                  </div>
+                </div>
+
+                <!-- Creacion de botones para cancelar y guardar el cliente -->
+                <button type="button" class="btn btn-danger mt-3 mx-2" style="width:170px;" data-dismiss="modal" id="btnCancelarRegistro">Cancelar</button>
+
+                <button type="button" style="width: 170px;" class="btn btn-primary mt-3 mx-2" id="btnGuardarCliente" onclick="formSubmitClick()">Guardar Cliente</button>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <script>
     $(document).ready(function(){
       var table;
-
+      var accion;
       /*
       LLenar tabla clientes 
       */
@@ -129,7 +228,7 @@
                 className: 'addNewRecord',
                 action: function(e, dt, node, config) {
                     //EVENTO PARA LEVENTAR LA VENTA MODAL
-                    alert('nuevo Boton')
+                    $("#mdlGestionarCliente").modal("show");
                 }
             },
             'excel', 'print', 'pageLength'
@@ -224,5 +323,119 @@
         table.search("").columns().search("").draw();
       })
 
+      $("#btnCancelarRegistro,#btnCerrarModal").on("click",function(){
+
+        $("#validate_nombre").css("display","none");
+        $("#validate_apellido").css("display","none");
+        $("#validate_direccion").css("display","none");
+        $("#validate_telefono").css("display","none");
+        $("#validate_correo").css("display","none");
+
+        $("#iptNombreReg").val("");
+        $("#iptApellidoReg").val("");
+        $("#iptDireccionReg").val("");
+        $("#iptTelefonoReg").val("");
+        $("#iptCorreoReg").val("");
+      })
+
+
     })
+
+    function formSubmitClick(){
+      // Validar ingreso de campos
+      let nombre = $("#iptNombreReg").val().trim();
+      let apellido = $("#iptApellidoReg").val().trim();
+      let direccion = $("#iptDireccionReg").val().trim();
+      let telefono = $("#iptTelefonoReg").val().trim();
+      let correo = $("#iptCorreoReg").val().trim();
+
+      console.log("Campos de entrada:", nombre, apellido, direccion, telefono, correo);
+
+      let valid = true;
+
+      if (nombre === "") {
+        $("#validate_nombre").show();
+        valid = false;
+      } else {
+        $("#validate_nombre").hide();
+      }
+
+      if (apellido === "") {
+        $("#validate_apellido").show();
+        valid = false;
+      } else {
+        $("#validate_apellido").hide();
+      }
+
+      if (direccion === "") {
+        $("#validate_direccion").show();
+        valid = false;
+      } else {
+        $("#validate_direccion").hide();
+      }
+
+      if (telefono === "") {
+        $("#validate_telefono").show();
+        valid = false;
+      } else {
+        $("#validate_telefono").hide();
+      }
+
+      if (correo === "") {
+        $("#validate_correo").show();
+        valid = false;
+      } else {
+        $("#validate_correo").hide();
+      }
+
+      if (!valid) {
+        return;
+      }
+
+      console.log("Mostrando diálogo de confirmación");
+
+          var datos = new FormData();
+          datos.append("accion", 2);
+          datos.append("nombre_cliente", nombre);
+          datos.append("apellido_cliente", apellido);
+          datos.append("direccion_cliente", direccion);
+          datos.append("telefono_cliente", telefono);
+          datos.append("correo_cliente", correo);
+
+          console.log("Enviando datos:", datos);
+
+          $.ajax({
+              url: "ajax/clientes.ajax.php",
+              method: "POST",
+              data: datos,
+              cache: false,
+              contentType: false,
+              processData: false,
+              dataType: 'json',
+              success: function (respuesta) {
+                console.log("Respuesta del servidor:", respuesta);
+                if (respuesta === "ok"){
+
+                  alert("El cliente se registró correctamente");
+
+                  table.ajax.reload();
+
+                  $("#mdlGestionarCliente").modal ('hide');
+
+                  $("#iptNombreReg").val("");
+                  $("#iptApellidoReg").val("");
+                  $("#iptDireccionReg").val("");
+                  $("#iptTelefonoReg").val("");
+                  $("#iptCorreoReg").val("");
+                } else {
+                  alert("El cliente no se registró");
+                }
+              }, 
+              error: function (jqXHR, textStatus, errorThrown){
+                console.log("Error en la solicitud:", textStatus, errorThrown);
+                alert("Ocurrió un error en la solicitud: " + textStatus);
+              }
+            });
+        }
+    
     </script>

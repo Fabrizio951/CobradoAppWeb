@@ -41,4 +41,46 @@ class ClientesModelo{
             return null;
         }
     }
+
+    static public function mdlRegistrarCliente($nombre_cliente,$apellido_cliente,$direccion_cliente,$telefono_cliente,$correo_cliente){
+        try {
+            $conn = conexion::conectar();
+
+            if (!$conn) {
+                throw new Exception("Error al conectar a la base de datos.");
+            }
+
+            $query = "{CALL InsertarCliente(?, ?, ?, ?, ?)}";
+            $params = array(
+                array(&$nombre_cliente, SQLSRV_PARAM_IN),
+                array(&$apellido_cliente, SQLSRV_PARAM_IN),
+                array(&$direccion_cliente, SQLSRV_PARAM_IN),
+                array(&$telefono_cliente, SQLSRV_PARAM_IN),
+                array(&$correo_cliente, SQLSRV_PARAM_IN)
+            );
+
+            $stmt = sqlsrv_prepare($conn, $query, $params);
+
+            if (!$stmt) {
+                throw new Exception("Error al preparar la consulta.");
+            }
+
+            $result = sqlsrv_execute($stmt);
+
+            if (!$result) {
+                throw new Exception("Error al ejecutar el procedimiento almacenado: " . print_r(sqlsrv_errors(), true));
+            } else {
+                $respuesta = "ok";
+            }
+
+            sqlsrv_free_stmt($stmt); // Liberar el recurso del statement
+            sqlsrv_close($conn); // Cerrar la conexión
+
+            
+
+        } catch (Exception $e) {
+            return "Excepción capturada: " . $e->getMessage() . "\n";
+        }
+        return $respuesta;
+    }
 }
