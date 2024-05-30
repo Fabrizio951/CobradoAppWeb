@@ -349,8 +349,6 @@
       let telefono = $("#iptTelefonoReg").val().trim();
       let correo = $("#iptCorreoReg").val().trim();
 
-      console.log("Campos de entrada:", nombre, apellido, direccion, telefono, correo);
-
       let valid = true;
 
       if (nombre === "") {
@@ -414,7 +412,7 @@
               dataType: 'json',
               success: function (respuesta) {
                 console.log("Respuesta del servidor:", respuesta);
-                if (respuesta === "ok"){
+                if (respuesta.message === "ok"){
 
                   alert("El cliente se registró correctamente");
 
