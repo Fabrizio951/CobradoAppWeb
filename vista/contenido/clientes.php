@@ -167,12 +167,10 @@
                   <div class="form-group mb-2">
                     <label class="" for="iptDireccionReg">
                       <i class="fas fa-file-signature fs-6"></i>
-                      <span class="small">Dirección</span><span class="text-danger">*</span>
+                      <span class="small">Dirección</span><span class="text-danger"></span>
                     </label>
                     <input type="text" class="form-control form-control-sm" id="iptDireccionReg"
                     placeholder="Descripción">
-                    <span id="validate_direccion" class="text-danger small fst-italic"
-                      style="display:none">Deben ingresar la dirección</span>
                   </div>
                 </div>
 
@@ -180,12 +178,10 @@
                 <div class="col-lg-6">
                   <div class="form-group mb-2">
                     <label class="" for="iptTelefonoReg"><i class="fa fa-user-circle fs-6"></i>
-                      <span class="small">Teléfono</span><span class="text-danger">*</span>
+                      <span class="small">Teléfono</span><span class="text-danger"></span>
                     </label>
                     <input type="text" class="form-control form-control-sm" id="iptTelefonoReg"
-                      name="iptTelefonoReg" placeholder="Nombre del Cliente" required>
-                    <span id="validate_telefono" class="text-danger small fst-italic"
-                      style="display:none">Debe ingresar Telefono</span>
+                      name="iptTelefonoReg" placeholder="Nombre del Cliente">
                   </div>
                 </div>
 
@@ -193,12 +189,10 @@
                 <div class="col-lg-6">
                   <div class="form-group mb-2">
                     <label class="" for="iptCorreoReg"><i class="fa fa-user-circle fs-6"></i>
-                      <span class="small">Correo</span><span class="text-danger">*</span>
+                      <span class="small">Correo</span><span class="text-danger"></span>
                     </label>
                     <input type="text" class="form-control form-control-sm" id="iptCorreoReg"
-                      name="iptCorreoReg" placeholder="Nombre del Cliente" required>
-                    <span id="validate_correo" class="text-danger small fst-italic"
-                      style="display:none">Debe ingresar correo</span>
+                      name="iptCorreoReg" placeholder="Nombre del Cliente">
                   </div>
                 </div>
 
@@ -363,27 +357,6 @@
         valid = false;
       } else {
         $("#validate_apellido").hide();
-      }
-
-      if (direccion === "") {
-        $("#validate_direccion").show();
-        valid = false;
-      } else {
-        $("#validate_direccion").hide();
-      }
-
-      if (telefono === "") {
-        $("#validate_telefono").show();
-        valid = false;
-      } else {
-        $("#validate_telefono").hide();
-      }
-
-      if (correo === "") {
-        $("#validate_correo").show();
-        valid = false;
-      } else {
-        $("#validate_correo").hide();
       }
 
       if (!valid) {
