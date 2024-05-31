@@ -332,7 +332,23 @@
         $("#iptCorreoReg").val("");
       })
 
+      $("#tbl_clientes tbody").on("click",".btnEditarCliente",function(){
 
+        accion = 4;
+
+        $("#mdlGestionarCliente").modal('show');
+
+        var data = table.row($(this).parents('tr')).data();
+        console.log("data",data)
+
+        // $("#iptIDcliente").val(data[1]);
+        $("#iptNombreReg").val(data[2]);
+        $("#iptApellidoReg").val(data[3]);
+        $("#iptDireccionReg").val(data[4]);
+        $("#iptTelefonoReg").val(data[5]);
+        $("#iptCorreoReg").val(data[6]);
+
+      })
     })
 
     function formSubmitClick(){
@@ -362,8 +378,6 @@
       if (!valid) {
         return;
       }
-
-      console.log("Mostrando diálogo de confirmación");
 
           var datos = new FormData();
           datos.append("accion", 2);
@@ -407,6 +421,6 @@
                 alert("Ocurrió un error en la solicitud: " + textStatus);
               }
             });
-        }
+    }
     
     </script>

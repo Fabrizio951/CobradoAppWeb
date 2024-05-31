@@ -20,6 +20,10 @@ class AjaxClientes{
         $cliente = ClientesControlador::ctrRegistrarCliente($this->nombre_cliente,$this->apellido_cliente,$this->direccion_cliente,$this->telefono_cliente,$this->correo_cliente);
         echo json_encode(array("status" => "success", "message" => $cliente));
     }
+
+    public function ajaxActualizarCliente(){
+
+    }
 }
 
 if (isset($_POST['accion'])) {
@@ -33,6 +37,8 @@ if (isset($_POST['accion'])) {
         $ajaxClientes->telefono_cliente = $_POST["telefono_cliente"];
         $ajaxClientes->correo_cliente = $_POST["correo_cliente"];
         $ajaxClientes->ajaxRegistrarCliente();
+    } else if ($accion == 4){
+        $ajaxClientes->ajaxActualizarCliente();
     } else {
         $ajaxClientes->getDatosClientes();
     }
