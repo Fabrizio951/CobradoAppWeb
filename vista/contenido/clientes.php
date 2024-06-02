@@ -209,9 +209,10 @@
     </div>
 
     <script>
+      var accion = 2;
+      var $valor_id = 1;
     $(document).ready(function(){
       var table;
-      var accion;
       /*
       LLenar tabla clientes 
       */
@@ -257,14 +258,15 @@
           {
             targets: 10,
             orderable: false,
-            render: function(datqa, type, full, meta) {
+            render: function(data, type, full, meta) {
                 return "<center>" +
                         "<span class='btnEditarCliente text-primary px-1' style='cursor:pointer;'>" +
                         "<i class='fas fa-pencil-alt fs-5'></i>" +
+                        "</span>" +
                         "<span class='btnEliminarCliente text-danger px-1' style='cursor:pointer;'>" +
                         "<i class='fas fa-trash fs-5'></i>" +
                         "</span>" +
-                        "</center>"
+                        "</center>";
                 }
           }
         ],
@@ -321,9 +323,6 @@
 
         $("#validate_nombre").css("display","none");
         $("#validate_apellido").css("display","none");
-        $("#validate_direccion").css("display","none");
-        $("#validate_telefono").css("display","none");
-        $("#validate_correo").css("display","none");
 
         $("#iptNombreReg").val("");
         $("#iptApellidoReg").val("");
@@ -332,6 +331,9 @@
         $("#iptCorreoReg").val("");
       })
 
+      /* -----------------------------------------------------------
+                                EDITAR CLIENTE 
+          ----------------------------------------------------------*/
       $("#tbl_clientes tbody").on("click",".btnEditarCliente",function(){
 
         accion = 4;
@@ -341,18 +343,69 @@
         var data = table.row($(this).parents('tr')).data();
         console.log("data",data)
 
-        // $("#iptIDcliente").val(data[1]);
+        $valor_id = data[1];
         $("#iptNombreReg").val(data[2]);
         $("#iptApellidoReg").val(data[3]);
         $("#iptDireccionReg").val(data[4]);
         $("#iptTelefonoReg").val(data[5]);
         $("#iptCorreoReg").val(data[6]);
 
+        console.log("valor_id:",$valor_id)
+      })
+
+      /* -----------------------------------------------------------
+                                BORRAR CLIENTE
+          ----------------------------------------------------------*/
+      $("#tbl_clientes tbody").on("click",".btnEliminarCliente",function(){
+
+        accion = 5;
+        var data = table.row($(this).parents('tr')).data();
+
+        $valor_id = data[1];
+
+        var datos = new FormData();
+
+        datos.append("accion", accion);
+        datos.append("id_cliente", $valor_id);
+
+        $.ajax({
+            url: "ajax/clientes.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (respuesta) {
+              console.log("Respuesta del servidor:", respuesta);
+              if (respuesta.message === "ok"){
+
+                 alert("Se elimino cliente correctamente");
+
+                 table.ajax.reload();
+
+                $("#mdlGestionarCliente").modal ('hide');
+
+                $("#iptNombreReg").val("");
+                $("#iptApellidoReg").val("");
+                $("#iptDireccionReg").val("");
+                $("#iptTelefonoReg").val("");
+                $("#iptCorreoReg").val("");
+                } else {
+                  alert("El cliente no se elimino");
+                }
+            }, 
+            error: function (jqXHR, textStatus, errorThrown){
+              console.log("Error en la solicitud:", textStatus, errorThrown);
+              alert("Ocurrió un error en la solicitud: " + textStatus);
+            }
+        });
       })
     })
 
     function formSubmitClick(){
       // Validar ingreso de campos
+      let id = $valor_id;
       let nombre = $("#iptNombreReg").val().trim();
       let apellido = $("#iptApellidoReg").val().trim();
       let direccion = $("#iptDireccionReg").val().trim();
@@ -379,48 +432,60 @@
         return;
       }
 
-          var datos = new FormData();
-          datos.append("accion", 2);
+      var datos = new FormData();
+
+
+      if (accion==2){
+          datos.append("accion", accion);
           datos.append("nombre_cliente", nombre);
           datos.append("apellido_cliente", apellido);
           datos.append("direccion_cliente", direccion);
           datos.append("telefono_cliente", telefono);
           datos.append("correo_cliente", correo);
+      } else if (accion==4){ //Editar cliente
+          datos.append("accion", accion);
+          datos.append("id_cliente", id);
+          datos.append("nombre_cliente", nombre);
+          datos.append("apellido_cliente", apellido);
+          datos.append("direccion_cliente", direccion);
+          datos.append("telefono_cliente", telefono);
+          datos.append("correo_cliente", correo);
+      } 
 
-          console.log("Enviando datos:", datos);
+        console.log("Enviando datos:", datos);
 
-          $.ajax({
-              url: "ajax/clientes.ajax.php",
-              method: "POST",
-              data: datos,
-              cache: false,
-              contentType: false,
-              processData: false,
-              dataType: 'json',
-              success: function (respuesta) {
-                console.log("Respuesta del servidor:", respuesta);
-                if (respuesta.message === "ok"){
+        $.ajax({
+            url: "ajax/clientes.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (respuesta) {
+              console.log("Respuesta del servidor:", respuesta);
+              if (respuesta.message === "ok"){
 
-                  alert("El cliente se registró correctamente");
+                 alert("El cliente se registró correctamente");
 
-                  table.ajax.reload();
+                 table.ajax.reload();
 
-                  $("#mdlGestionarCliente").modal ('hide');
+                $("#mdlGestionarCliente").modal ('hide');
 
-                  $("#iptNombreReg").val("");
-                  $("#iptApellidoReg").val("");
-                  $("#iptDireccionReg").val("");
-                  $("#iptTelefonoReg").val("");
-                  $("#iptCorreoReg").val("");
+                $("#iptNombreReg").val("");
+                $("#iptApellidoReg").val("");
+                $("#iptDireccionReg").val("");
+                $("#iptTelefonoReg").val("");
+                $("#iptCorreoReg").val("");
                 } else {
                   alert("El cliente no se registró");
                 }
-              }, 
-              error: function (jqXHR, textStatus, errorThrown){
-                console.log("Error en la solicitud:", textStatus, errorThrown);
-                alert("Ocurrió un error en la solicitud: " + textStatus);
-              }
-            });
+            }, 
+            error: function (jqXHR, textStatus, errorThrown){
+              console.log("Error en la solicitud:", textStatus, errorThrown);
+              alert("Ocurrió un error en la solicitud: " + textStatus);
+            }
+        });
     }
     
     </script>

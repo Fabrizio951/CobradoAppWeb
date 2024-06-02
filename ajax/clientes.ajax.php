@@ -5,6 +5,7 @@ require_once "../modelos/clientes.modelo.php";
 
 class AjaxClientes{
 
+    public $id_Cliente;
     public $nombre_cliente;
     public $apellido_cliente;
     public $direccion_cliente;
@@ -22,7 +23,12 @@ class AjaxClientes{
     }
 
     public function ajaxActualizarCliente(){
-
+        $cliente = ClientesControlador::ctrActualizarCliente($this->id_Cliente,$this->nombre_cliente,$this->apellido_cliente,$this->direccion_cliente,$this->telefono_cliente,$this->correo_cliente);
+        echo json_encode(array("status" => "success", "message" => $cliente));
+    }
+    public function ajaxEliminarCliente(){
+        $cliente = ClientesControlador::ctrBorrarClientes($this->id_Cliente);
+            echo json_encode(array("status" => "success", "message" => $cliente));
     }
 }
 
@@ -38,8 +44,18 @@ if (isset($_POST['accion'])) {
         $ajaxClientes->correo_cliente = $_POST["correo_cliente"];
         $ajaxClientes->ajaxRegistrarCliente();
     } else if ($accion == 4){
+        $ajaxClientes->id_Cliente = $_POST["id_cliente"];
+        $ajaxClientes->nombre_cliente = $_POST["nombre_cliente"];
+        $ajaxClientes->apellido_cliente = $_POST["apellido_cliente"];
+        $ajaxClientes->direccion_cliente = $_POST["direccion_cliente"];
+        $ajaxClientes->telefono_cliente = $_POST["telefono_cliente"];
+        $ajaxClientes->correo_cliente = $_POST["correo_cliente"];
         $ajaxClientes->ajaxActualizarCliente();
-    } else {
+    } else if ($accion == 5){
+        $ajaxClientes->id_Cliente = $_POST["id_cliente"];
+        $ajaxClientes->ajaxEliminarCliente();
+    } 
+    else {
         $ajaxClientes->getDatosClientes();
     }
 } else {
